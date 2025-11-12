@@ -34,7 +34,7 @@ A complete, beginner-friendly Django authentication system with user registratio
 - [🔒 Security Features](#security-features)
 - [🐛 Troubleshooting](#troubleshooting)
 - [🚀 Future Plan](#future-enhancements)
-- [🛠️ Technologies Used](#technologies-used)
+- [🛠️ Technologies](#technologies-used)
 
 ### 🤝 Community
 - [🤝 Contributing](#contributing)
