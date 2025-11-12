@@ -1,9 +1,6 @@
 # 🚀 Django Login & Signup Authentication System
 
 A complete, beginner-friendly Django authentication system with user registration, login, logout, and protected pages.
-For a comprehensive, step-by-step guide with detailed code explanations, visit:
-
-**🌐 [Complete Django Authentication Tutorial](https://shaksveo3.github.io/Login-Signup-with-Django/)**
 ![Django Version](https://img.shields.io/badge/Django-5.2.7-green.svg)
 ![Python Version](https://img.shields.io/badge/Python-3.x-blue.svg)
 ![License](https://img.shields.io/badge/License-MIT-yellow.svg)
