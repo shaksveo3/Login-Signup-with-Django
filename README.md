@@ -364,7 +364,7 @@ Forbidden (403): CSRF verification failed
 
 **Solution:** Add `{% csrf_token %}` inside all POST forms.
 
-## 🚀 Future Enhancements
+## 🚀 Future plan
 
 - [ ] Email verification for new accounts
 - [ ] Password reset functionality
