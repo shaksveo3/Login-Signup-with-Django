@@ -12,7 +12,7 @@ A complete, beginner-friendly Django authentication system with user registratio
 For a comprehensive, step-by-step guide with detailed code explanations, visit:
 
 <div align="center">
-  <a href="https://shaksveo3.github.io/Login-Signup-with-Django/" style="
+  <a href="https://shaksveo3.github.io/Login-Signup-with-Django/" target="_blank" style="
     display: inline-block;
     background: linear-gradient(45deg, #2196F3, #21CBF3);
     color: white;
@@ -30,6 +30,7 @@ For a comprehensive, step-by-step guide with detailed code explanations, visit:
     🌐 <strong>Complete Django Authentication Tutorial</strong> →
   </a>
 </div>
+
 
 
 ## 📋 Table of Contents
