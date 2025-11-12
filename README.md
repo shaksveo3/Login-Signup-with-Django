@@ -14,22 +14,59 @@ For a comprehensive, step-by-step guide with detailed code explanations, visit:
 <div align="center">
   <a href="https://shaksveo3.github.io/Login-Signup-with-Django/" style="
     display: inline-block;
-    background: linear-gradient(45deg, #2196F3, #21CBF3);
+    position: relative;
+    background: linear-gradient(45deg, #FF6B6B, #4ECDC4, #45B7D1, #96CEB4, #FECA57);
+    background-size: 300% 300%;
     color: white;
-    padding: 12px 24px;
-    font-size: 18px;
+    padding: 18px 36px;
+    font-size: 22px;
     font-weight: bold;
     text-align: center;
     text-decoration: none;
     border-radius: 50px;
-    box-shadow: 0 4px 15px rgba(33, 150, 243, 0.4);
-    transition: all 0.3s ease;
-    border: none;
+    box-shadow: 
+      0 10px 25px rgba(0,0,0,0.2),
+      inset 0 -3px 0 rgba(0,0,0,0.2);
     cursor: pointer;
+    overflow: hidden;
+    z-index: 1;
+    animation: gradientShift 4s ease infinite, pulse 2s ease-in-out infinite;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   ">
-    🌐 <strong>Complete Django Authentication Tutorial</strong> →
+    <span style="
+      position: relative;
+      z-index: 2;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    ">🌐 <strong>Complete Django Authentication Tutorial</strong> →</span>
+    <div style="
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+      animation: shine 3s infinite;
+    "></div>
   </a>
 </div>
+
+<style>
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.03); }
+  100% { transform: scale(1); }
+}
+@keyframes shine {
+  0% { left: -100%; }
+  20% { left: 100%; }
+  100% { left: 100%; }
+}
+</style>
 
 
 ## 📋 Table of Contents
