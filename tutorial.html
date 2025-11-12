@@ -1,0 +1,1864 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Django Login/Signup Tutorial - Complete Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+        
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        section {
+            margin-bottom: 50px;
+            border-left: 5px solid #667eea;
+            padding-left: 30px;
+        }
+        
+        section h2 {
+            color: #667eea;
+            font-size: 2em;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+        
+        section h2::before {
+            content: "▶";
+            margin-right: 15px;
+            font-size: 0.8em;
+        }
+        
+        section h3 {
+            color: #764ba2;
+            font-size: 1.5em;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+        
+        section h4 {
+            color: #555;
+            font-size: 1.2em;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .diagram {
+            background: #f5f5f5;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-size: 0.9em;
+            line-height: 1.4;
+        }
+        
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+            line-height: 1.6;
+            border-left: 4px solid #667eea;
+            white-space: pre;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.3);
+        }
+        
+        .code-block code {
+            color: inherit;
+            display: block;
+            white-space: pre;
+        }
+        
+        /* Syntax Highlighting */
+        .keyword { color: #569cd6; font-weight: bold; }
+        .string { color: #ce9178; }
+        .number { color: #b5cea8; }
+        .function { color: #dcdcaa; }
+        .comment { color: #6a9955; font-style: italic; }
+        .punctuation { color: #d4d4d4; }
+        .class-name { color: #4ec9b0; }
+        .decorator { color: #dcdcaa; }
+        .variable { color: #9cdcfe; }
+        
+        code span {
+            font-style: normal;
+        }
+        
+        .highlight {
+            background: #fff3cd;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+        
+        .key-point {
+            background: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+        
+        .key-point strong {
+            color: #1565c0;
+        }
+        
+        .warning {
+            background: #fff3cd;
+            border-left: 4px solid #ff9800;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+        
+        .success {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        table th {
+            background: #667eea;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: bold;
+        }
+        
+        table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        table tr:hover {
+            background: #f5f5f5;
+        }
+        
+        .flow-box {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin: 5px;
+            font-weight: bold;
+        }
+        
+        .arrow {
+            display: inline-block;
+            margin: 0 10px;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        ul, ol {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 10px;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+        }
+        
+        .btn:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+        }
+        
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+        
+        footer {
+            background: #f8f9fa;
+            border-top: 1px solid #ddd;
+            padding: 20px;
+            text-align: center;
+            color: #666;
+        }
+        
+        .step-number {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 35px;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .comparison-item {
+            border: 2px solid #ddd;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        
+        .comparison-item.good {
+            border-color: #28a745;
+            background: #f0f7f4;
+        }
+        
+        .comparison-item.bad {
+            border-color: #dc3545;
+            background: #f7f0f1;
+        }
+        
+        .comparison-item h4 {
+            margin-top: 0;
+        }
+        
+        @media print {
+            body {
+                background: white;
+            }
+            .container {
+                box-shadow: none;
+                border-radius: 0;
+            }
+        }
+        
+        .slide-indicator {
+            text-align: right;
+            font-size: 0.9em;
+            color: #999;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- HEADER -->
+        <header>
+            <h1>🚀 Django Login & Signup System</h1>
+            <p>Complete Beginner's Guide to Authentication</p>
+            <p style="font-size: 0.9em; margin-top: 10px;">A Step-by-Step Tutorial for Students</p>
+        </header>
+        
+        <!-- CONTENT -->
+        <div class="content">
+            
+            <!-- SECTION 1: INTRODUCTION -->
+            <section>
+                <h2>What Are We Building?</h2>
+                <p>This tutorial covers a complete <span class="highlight">User Authentication System</span> with three main pages:</p>
+                
+                <div class="flow-box">📝 Signup</div>
+                <span class="arrow">→</span>
+                <div class="flow-box">🔐 Login</div>
+                <span class="arrow">→</span>
+                <div class="flow-box">✅ Welcome</div>
+                <span class="arrow">→</span>
+                <div class="flow-box">🚪 Logout</div>
+                
+                <h3>Why Do We Need Authentication?</h3>
+                <ul>
+                    <li>🔒 <strong>Security:</strong> Protect user accounts with passwords</li>
+                    <li>📊 <strong>User Data:</strong> Store and manage user information</li>
+                    <li>🎯 <strong>Access Control:</strong> Show different content to different users</li>
+                    <li>🛡️ <strong>Privacy:</strong> Keep personal information private</li>
+                </ul>
+            </section>
+            
+            <!-- SECTION 2: PROJECT STRUCTURE -->
+            <section>
+                <h2>Project Structure & Setup</h2>
+                <h3>Folder Organization</h3>
+                
+                <div class="diagram">
+login_signup_cld/                ← Main Project Folder
+├── manage.py                    ← Django management tool
+├── tutorial.html               ← This file!
+│
+├── accounts/                   ← Django App (handles auth)
+│   ├── __init__.py
+│   ├── admin.py
+│   ├── apps.py
+│   ├── models.py              ← Database structure
+│   ├── views.py               ← Backend logic
+│   ├── urls.py                ← URL routing
+│   ├── tests.py
+│   ├── templates/
+│   │   ├── signup.html       ← Signup form
+│   │   ├── login.html        ← Login form
+│   │   └── welcome.html      ← Protected page
+│   └── migrations/            ← Database changes
+│
+└── login_signup_cld/           ← Main Project Config
+    ├── __init__.py
+    ├── settings.py           ← Project settings
+    ├── urls.py               ← Main URL router
+    ├── asgi.py
+    └── wsgi.py
+                </div>
+                
+                <h3>What Is An "App"?</h3>
+                <div class="key-point">
+                    <strong>Django App =</strong> A reusable module that handles specific functionality.
+                    Our <code>accounts</code> app handles all authentication (signup, login, logout).
+                </div>
+                
+                <h3>Database Configuration</h3>
+                <p>In <code>settings.py</code>, we configure MySQL database:</p>
+                
+                <div class="code-block"><code><span class="variable">DATABASES</span> = {
+    <span class="string">'default'</span>: {
+        <span class="string">'ENGINE'</span>: <span class="string">'django.db.backends.mysql'</span>,
+        <span class="string">'NAME'</span>: <span class="string">'django_login_signup'</span>,
+        <span class="string">'USER'</span>: <span class="string">'root'</span>,
+        <span class="string">'PASSWORD'</span>: <span class="string">''</span>,
+        <span class="string">'HOST'</span>: <span class="string">'localhost'</span>,
+        <span class="string">'PORT'</span>: <span class="string">'3306'</span>,
+    }
+}</code></div>
+                
+                <div class="key-point">
+                    <strong>🔑 Key Point:</strong> This tells Django to use MySQL database named <code>django_login_signup</code>
+                </div>
+            </section>
+            
+            <!-- SECTION 3: DATABASE & USER MODEL -->
+            <section>
+                <h2>Database & User Model</h2>
+                
+                <h3>What Is A Model?</h3>
+                <div class="key-point">
+                    <strong>Model =</strong> Blueprint for data in database. It's like a table in Excel.
+                </div>
+                
+                <h3>Django's Built-in User Model</h3>
+                <p>We use Django's pre-built <code>User</code> model. It has these fields:</p>
+                
+                <div class="diagram">
+User Table in Database
+├── id              → Unique identifier
+├── username        → Login name (unique)
+├── email           → Email address
+├── password        → Encrypted password
+├── first_name      → User's first name
+├── last_name       → User's last name
+├── is_active       → Account active? (True/False)
+├── is_staff        → Admin? (True/False)
+├── date_joined     → When account created
+└── last_login      → When last logged in
+                </div>
+                
+                <h3>Why Use Built-in Model?</h3>
+                <ul>
+                    <li>✅ Already tested and secure</li>
+                    <li>✅ Password hashing built-in</li>
+                    <li>✅ Works with Django admin</li>
+                    <li>✅ No need to reinvent the wheel!</li>
+                </ul>
+                
+                <h3>Importing User Model</h3>
+                <div class="code-block"><code><span class="keyword">from</span> <span class="class-name">django.contrib.auth.models</span> <span class="keyword">import</span> <span class="class-name">User</span>
+
+<span class="comment"># Create a new user</span>
+<span class="variable">user</span> = <span class="class-name">User</span>.<span class="function">objects.create_user</span>(
+    <span class="string">username</span>=<span class="string">'john'</span>,
+    <span class="string">email</span>=<span class="string">'john@example.com'</span>,
+    <span class="string">password</span>=<span class="string">'secure123'</span>
+)
+
+<span class="comment"># Query users</span>
+<span class="variable">users</span> = <span class="class-name">User</span>.<span class="function">objects.all</span>()
+<span class="variable">user</span> = <span class="class-name">User</span>.<span class="function">objects.get</span>(<span class="string">username</span>=<span class="string">'john'</span>)</code></div>
+            </section>
+            
+            <!-- SECTION 4: URL ROUTING -->
+            <section>
+                <h2>URL Routing - How Django Finds Pages</h2>
+                
+                <h3>Understanding URL Routing</h3>
+                <div class="diagram">
+User visits URL
+        ↓
+Django receives request
+        ↓
+Checks project/urls.py (main router)
+        ↓
+Includes accounts/urls.py
+        ↓
+Matches URL pattern
+        ↓
+Calls appropriate view function
+        ↓
+Returns HTML response
+                </div>
+                
+                <h3>Main Project URLs (login_signup_cld/urls.py)</h3>
+                <div class="code-block"><code><span class="keyword">from</span> <span class="class-name">django.contrib</span> <span class="keyword">import</span> <span class="variable">admin</span>
+<span class="keyword">from</span> <span class="class-name">django.urls</span> <span class="keyword">import</span> <span class="variable">path</span>, <span class="variable">include</span>
+
+<span class="variable">urlpatterns</span> = [
+    <span class="function">path</span>(<span class="string">'admin/'</span>, <span class="variable">admin.site.urls</span>),
+    <span class="function">path</span>(<span class="string">''</span>, <span class="function">include</span>(<span class="string">'accounts.urls'</span>)),  <span class="comment"># Include accounts URLs</span>
+]</code></div>
+                
+                <div class="key-point">
+                    <strong>path('', include('accounts.urls'))</strong> means:
+                    All empty prefix routes go to accounts/urls.py
+                </div>
+                
+                <h3>App URLs (accounts/urls.py)</h3>
+                <div class="code-block"><code><span class="keyword">from</span> <span class="class-name">django.urls</span> <span class="keyword">import</span> <span class="variable">path</span>
+<span class="keyword">from</span> <span class="punctuation">.</span> <span class="keyword">import</span> <span class="variable">views</span>
+
+<span class="variable">urlpatterns</span> = [
+    <span class="function">path</span>(<span class="string">''</span>, <span class="variable">views.signup_view</span>, <span class="string">name</span>=<span class="string">'signup'</span>),
+    <span class="function">path</span>(<span class="string">'signup/'</span>, <span class="variable">views.signup_view</span>, <span class="string">name</span>=<span class="string">'signup'</span>),
+    <span class="function">path</span>(<span class="string">'login/'</span>, <span class="variable">views.login_view</span>, <span class="string">name</span>=<span class="string">'login'</span>),
+    <span class="function">path</span>(<span class="string">'welcome/'</span>, <span class="variable">views.welcome_view</span>, <span class="string">name</span>=<span class="string">'welcome'</span>),
+    <span class="function">path</span>(<span class="string">'logout/'</span>, <span class="variable">views.logout_view</span>, <span class="string">name</span>=<span class="string">'logout'</span>),
+]</code></div>
+                
+                <h3>URL Mapping Table</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>User Visits URL</th>
+                            <th>Django Calls Function</th>
+                            <th>Loads Template</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>http://localhost:8000/</code></td>
+                            <td><code>signup_view()</code></td>
+                            <td>signup.html</td>
+                        </tr>
+                        <tr>
+                            <td><code>http://localhost:8000/signup/</code></td>
+                            <td><code>signup_view()</code></td>
+                            <td>signup.html</td>
+                        </tr>
+                        <tr>
+                            <td><code>http://localhost:8000/login/</code></td>
+                            <td><code>login_view()</code></td>
+                            <td>login.html</td>
+                        </tr>
+                        <tr>
+                            <td><code>http://localhost:8000/welcome/</code></td>
+                            <td><code>welcome_view()</code></td>
+                            <td>welcome.html</td>
+                        </tr>
+                        <tr>
+                            <td><code>http://localhost:8000/logout/</code></td>
+                            <td><code>logout_view()</code></td>
+                            <td>Redirects to login</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <h3>URL Names vs URL Paths</h3>
+                <div class="diagram">
+path('login/', views.login_view, name='login')
+ ↓                                     ↓
+URL path                          URL name (for reference)
+
+Use in template:
+{% url 'login' %}  → Generates: /login/
+
+Why? If you change URL path later, template still works!
+                </div>
+            </section>
+            
+            <!-- SECTION 5: SIGNUP PROCESS -->
+            <section>
+                <h2>Signup Process - Step By Step</h2>
+                
+                <h3>Complete Signup Flow</h3>
+                <div class="diagram">
+1. User visits http://localhost:8000/
+         ↓
+2. Django calls signup_view() with GET request
+         ↓
+3. signup_view() returns signup.html (empty form)
+         ↓
+4. User sees form with fields:
+   - Username
+   - Email
+   - Password
+   - Confirm Password
+         ↓
+5. User fills form and clicks "Sign Up"
+         ↓
+6. Form submitted with POST method
+         ↓
+7. Django calls signup_view() with POST request
+         ↓
+8. Backend processes data and validates
+         ↓
+9. If valid → Create user → Show success → Redirect to login
+   If invalid → Show error → Redirect to signup
+                </div>
+                
+                <h3>Views.py - Signup Function</h3>
+                <div class="code-block"><code><span class="keyword">from</span> <span class="class-name">django.shortcuts</span> <span class="keyword">import</span> <span class="variable">render</span>, <span class="variable">redirect</span>
+<span class="keyword">from</span> <span class="class-name">django.contrib.auth.models</span> <span class="keyword">import</span> <span class="class-name">User</span>
+<span class="keyword">from</span> <span class="class-name">django.contrib</span> <span class="keyword">import</span> <span class="variable">messages</span>
+
+<span class="keyword">def</span> <span class="function">signup_view</span>(<span class="variable">request</span>):
+    <span class="comment"># Check if form was submitted</span>
+    <span class="keyword">if</span> <span class="variable">request</span>.<span class="variable">method</span> == <span class="string">'POST'</span>:
+        <span class="comment"># Get form data</span>
+        <span class="variable">username</span> = <span class="variable">request</span>.<span class="variable">POST</span>[<span class="string">'username'</span>]
+        <span class="variable">email</span> = <span class="variable">request</span>.<span class="variable">POST</span>[<span class="string">'email'</span>]
+        <span class="variable">password</span> = <span class="variable">request</span>.<span class="variable">POST</span>[<span class="string">'password'</span>]
+        <span class="variable">password2</span> = <span class="variable">request</span>.<span class="variable">POST</span>[<span class="string">'password2'</span>]
+        
+        <span class="comment"># Step 1: Check passwords match</span>
+        <span class="keyword">if</span> <span class="variable">password</span> == <span class="variable">password2</span>:
+            <span class="comment"># Step 2: Check username doesn't exist</span>
+            <span class="keyword">if</span> <span class="class-name">User</span>.<span class="variable">objects</span>.<span class="function">filter</span>(<span class="variable">username</span>=<span class="variable">username</span>).<span class="function">exists</span>():
+                <span class="variable">messages</span>.<span class="function">error</span>(<span class="variable">request</span>, <span class="string">'Username already exists'</span>)
+                <span class="keyword">return</span> <span class="function">redirect</span>(<span class="string">'signup'</span>)
+            
+            <span class="comment"># Step 3: Check email doesn't exist</span>
+            <span class="keyword">elif</span> <span class="class-name">User</span>.<span class="variable">objects</span>.<span class="function">filter</span>(<span class="variable">email</span>=<span class="variable">email</span>).<span class="function">exists</span>():
+                <span class="variable">messages</span>.<span class="function">error</span>(<span class="variable">request</span>, <span class="string">'Email already exists'</span>)
+                <span class="keyword">return</span> <span class="function">redirect</span>(<span class="string">'signup'</span>)
+            
+            <span class="comment"># Step 4: Create user</span>
+            <span class="keyword">else</span>:
+                <span class="variable">user</span> = <span class="class-name">User</span>.<span class="variable">objects</span>.<span class="function">create_user</span>(
+                    <span class="variable">username</span>=<span class="variable">username</span>,
+                    <span class="variable">email</span>=<span class="variable">email</span>,
+                    <span class="variable">password</span>=<span class="variable">password</span>
+                )
+                <span class="variable">user</span>.<span class="function">save</span>()
+                <span class="variable">messages</span>.<span class="function">success</span>(<span class="variable">request</span>, <span class="string">'Account created! Please login.'</span>)
+                <span class="keyword">return</span> <span class="function">redirect</span>(<span class="string">'login'</span>)
+        <span class="keyword">else</span>:
+            <span class="variable">messages</span>.<span class="function">error</span>(<span class="variable">request</span>, <span class="string">'Passwords do not match'</span>)
+            <span class="keyword">return</span> <span class="function">redirect</span>(<span class="string">'signup'</span>)
+    
+    <span class="comment"># Show empty form for GET request</span>
+    <span class="keyword">return</span> <span class="function">render</span>(<span class="variable">request</span>, <span class="string">'signup.html'</span>)</code></div>
+                
+                <h3>Step 1: Get Form Data</h3>
+                <div class="code-block"><code><span class="variable">username</span> = <span class="variable">request</span>.<span class="variable">POST</span>[<span class="string">'username'</span>]
+<span class="variable">email</span> = <span class="variable">request</span>.<span class="variable">POST</span>[<span class="string">'email'</span>]
+<span class="variable">password</span> = <span class="variable">request</span>.<span class="variable">POST</span>[<span class="string">'password'</span>]
+<span class="variable">password2</span> = <span class="variable">request</span>.<span class="variable">POST</span>[<span class="string">'password2'</span>]</code></div>
+                
+                <div class="key-point">
+                    <strong>request.POST:</strong> Dictionary containing form data submitted by user
+                </div>
+                
+                <h3>Step 2: Validate Passwords Match</h3>
+                <div class="code-block"><code><span class="keyword">if</span> <span class="variable">password</span> == <span class="variable">password2</span>:
+    <span class="comment"># Continue signup</span>
+<span class="keyword">else</span>:
+    <span class="variable">messages</span>.<span class="function">error</span>(<span class="variable">request</span>, <span class="string">'Passwords do not match'</span>)
+    <span class="keyword">return</span> <span class="function">redirect</span>(<span class="string">'signup'</span>)</code></div>
+                
+                <div class="warning">
+                    <strong>⚠️ Important:</strong> Password confirmation prevents typos. User confirms password matches what they typed.
+                </div>
+                
+                <h3>Step 3: Check Username Doesn't Exist</h3>
+                <div class="code-block"><code><span class="keyword">if</span> <span class="class-name">User</span>.<span class="variable">objects</span>.<span class="function">filter</span>(<span class="variable">username</span>=<span class="variable">username</span>).<span class="function">exists</span>():
+    <span class="variable">messages</span>.<span class="function">error</span>(<span class="variable">request</span>, <span class="string">'Username already exists'</span>)
+    <span class="keyword">return</span> <span class="function">redirect</span>(<span class="string">'signup'</span>)</code></div>
+                
+                <div class="key-point">
+                    <strong>User.objects.filter():</strong> Queries database for users with that username
+                    <br><strong>.exists():</strong> Returns True if found, False if not found
+                </div>
+                
+                <h3>Step 4: Create User in Database</h3>
+                <div class="code-block"><code><span class="variable">user</span> = <span class="class-name">User</span>.<span class="variable">objects</span>.<span class="function">create_user</span>(
+    <span class="variable">username</span>=<span class="variable">username</span>,
+    <span class="variable">email</span>=<span class="variable">email</span>,
+    <span class="variable">password</span>=<span class="variable">password</span>
+)
+<span class="variable">user</span>.<span class="function">save</span>()</code></div>
+                
+                <h3>Password Hashing Explained</h3>
+                <div class="diagram">
+Plain Password: "hello123"
+        ↓
+Django's Hashing Algorithm (PBKDF2)
+        ↓
+Stored in Database: "pbkdf2_sha256$260000$abc123def456$..."
+        ↓
+KEY POINT: Cannot be reversed!
+You cannot get "hello123" back from the hash.
+When user logs in, Django hashes their password
+and compares the hashes instead!
+                </div>
+                
+                <h3>Signup Template (signup.html)</h3>
+                <div class="code-block"><code><span class="punctuation">&lt;</span><span class="keyword">form</span> <span class="variable">method</span>=<span class="string">"POST"</span><span class="punctuation">&gt;</span>
+    {% <span class="function">csrf_token</span> %}
+    
+    <span class="punctuation">&lt;</span><span class="keyword">label</span><span class="punctuation">&gt;</span>Username:<span class="punctuation">&lt;/</span><span class="keyword">label</span><span class="punctuation">&gt;&lt;</span><span class="keyword">br</span><span class="punctuation">&gt;</span>
+    <span class="punctuation">&lt;</span><span class="keyword">input</span> <span class="variable">type</span>=<span class="string">"text"</span> <span class="variable">name</span>=<span class="string">"username"</span> <span class="variable">required</span><span class="punctuation">&gt;&lt;</span><span class="keyword">br</span><span class="punctuation">&gt;&lt;</span><span class="keyword">br</span><span class="punctuation">&gt;</span>
+    
+    <span class="punctuation">&lt;</span><span class="keyword">label</span><span class="punctuation">&gt;</span>Email:<span class="punctuation">&lt;/</span><span class="keyword">label</span><span class="punctuation">&gt;&lt;</span><span class="keyword">br</span><span class="punctuation">&gt;</span>
+    <span class="punctuation">&lt;</span><span class="keyword">input</span> <span class="variable">type</span>=<span class="string">"email"</span> <span class="variable">name</span>=<span class="string">"email"</span> <span class="variable">required</span><span class="punctuation">&gt;&lt;</span><span class="keyword">br</span><span class="punctuation">&gt;&lt;</span><span class="keyword">br</span><span class="punctuation">&gt;</span>
+    
+    <span class="punctuation">&lt;</span><span class="keyword">label</span><span class="punctuation">&gt;</span>Password:<span class="punctuation">&lt;/</span><span class="keyword">label</span><span class="punctuation">&gt;&lt;</span><span class="keyword">br</span><span class="punctuation">&gt;</span>
+    <span class="punctuation">&lt;</span><span class="keyword">input</span> <span class="variable">type</span>=<span class="string">"password"</span> <span class="variable">name</span>=<span class="string">"password"</span> <span class="variable">required</span><span class="punctuation">&gt;&lt;</span><span class="keyword">br</span><span class="punctuation">&gt;&lt;</span><span class="keyword">br</span><span class="punctuation">&gt;</span>
+    
+    <span class="punctuation">&lt;</span><span class="keyword">label</span><span class="punctuation">&gt;</span>Confirm Password:<span class="punctuation">&lt;/</span><span class="keyword">label</span><span class="punctuation">&gt;&lt;</span><span class="keyword">br</span><span class="punctuation">&gt;</span>
+    <span class="punctuation">&lt;</span><span class="keyword">input</span> <span class="variable">type</span>=<span class="string">"password"</span> <span class="variable">name</span>=<span class="string">"password2"</span> <span class="variable">required</span><span class="punctuation">&gt;&lt;</span><span class="keyword">br</span><span class="punctuation">&gt;&lt;</span><span class="keyword">br</span><span class="punctuation">&gt;</span>
+    
+    <span class="punctuation">&lt;</span><span class="keyword">button</span> <span class="variable">type</span>=<span class="string">"submit"</span><span class="punctuation">&gt;</span>Sign Up<span class="punctuation">&lt;/</span><span class="keyword">button</span><span class="punctuation">&gt;</span>
+<span class="punctuation">&lt;/</span><span class="keyword">form</span><span class="punctuation">&gt;</span></code></div>
+                
+                <h3>What Is CSRF Token?</h3>
+                <div class="key-point">
+                    <strong>{% csrf_token %}</strong> - Cross-Site Request Forgery Token
+                    <br>Security mechanism that ensures form came from your website, not a hacker.
+                    <br>Django automatically validates this token.
+                </div>
+            </section>
+            
+            <!-- SECTION 6: LOGIN PROCESS -->
+            <section>
+                <h2>Login Process - Step By Step</h2>
+                
+                <h3>Complete Login Flow</h3>
+                <div class="diagram">
+1. User visits http://localhost:8000/login/
+         ↓
+2. Django calls login_view() with GET request
+         ↓
+3. login_view() returns login.html (empty form)
+         ↓
+4. User sees form with fields:
+   - Username
+   - Password
+         ↓
+5. User enters credentials and clicks "Login"
+         ↓
+6. Form submitted with POST method
+         ↓
+7. Django calls login_view() with POST request
+         ↓
+8. Backend authenticates user
+         ↓
+9. If credentials valid → Create session → Redirect to welcome
+   If invalid → Show error → Redirect to login
+                </div>
+                
+                <h3>Views.py - Login Function</h3>
+                <div class="code-block"><code><span class="keyword">from</span> <span class="class-name">django.contrib.auth</span> <span class="keyword">import</span> <span class="variable">authenticate</span>, <span class="variable">login</span>
+
+<span class="keyword">def</span> <span class="function">login_view</span>(<span class="variable">request</span>):
+    <span class="keyword">if</span> <span class="variable">request</span>.<span class="variable">method</span> == <span class="string">'POST'</span>:
+        <span class="comment"># Get form data</span>
+        <span class="variable">username</span> = <span class="variable">request</span>.<span class="variable">POST</span>[<span class="string">'username'</span>]
+        <span class="variable">password</span> = <span class="variable">request</span>.<span class="variable">POST</span>[<span class="string">'password'</span>]
+        
+        <span class="comment"># Authenticate user</span>
+        <span class="variable">user</span> = <span class="function">authenticate</span>(<span class="variable">request</span>, <span class="variable">username</span>=<span class="variable">username</span>, <span class="variable">password</span>=<span class="variable">password</span>)
+        
+        <span class="comment"># Check if authentication successful</span>
+        <span class="keyword">if</span> <span class="variable">user</span> <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span>:
+            <span class="comment"># Create session</span>
+            <span class="function">login</span>(<span class="variable">request</span>, <span class="variable">user</span>)
+            <span class="keyword">return</span> <span class="function">redirect</span>(<span class="string">'welcome'</span>)
+        <span class="keyword">else</span>:
+            <span class="variable">messages</span>.<span class="function">error</span>(<span class="variable">request</span>, <span class="string">'Invalid username or password'</span>)
+            <span class="keyword">return</span> <span class="function">redirect</span>(<span class="string">'login'</span>)
+    
+    <span class="comment"># Show empty form for GET request</span>
+    <span class="keyword">return</span> <span class="function">render</span>(<span class="variable">request</span>, <span class="string">'login.html'</span>)</code></div>
+                
+                <h3>Authentication Process Explained</h3>
+                <div class="diagram">
+User enters:
+- username = "john"
+- password = "hello123"
+        ↓
+authenticate() function:
+        ├─ Search database for user "john"
+        ├─ Get his stored password hash
+        ├─ Hash the entered password "hello123"
+        └─ Compare: entered_hash == stored_hash ?
+                ├─ YES → Return user object ✓
+                └─ NO → Return None ✗
+        ↓
+if user is not None:
+    login(request, user)  ← Create session
+    return redirect('welcome')
+else:
+    Show error message
+                </div>
+                
+                <h3>What Is authenticate()?</h3>
+                <div class="key-point">
+                    <strong>authenticate(request, username, password):</strong>
+                    <br>• Searches database for user with given username
+                    <br>• Checks if password matches (via hashing)
+                    <br>• Returns User object if match, None if not
+                </div>
+                
+                <h3>What Is login()?</h3>
+                <div class="key-point">
+                    <strong>login(request, user):</strong>
+                    <br>• Creates a session for the user
+                    <br>• Sends session cookie to browser
+                    <br>• Django remembers this user for future requests
+                </div>
+                
+                <h3>Sessions Explained</h3>
+                <div class="diagram">
+SESSION = Server's way of remembering users
+
+Without Session:
+- Request 1: "Who are you?" → User says "I'm john"
+- Request 2: "Who are you?" → User says "I'm john" (AGAIN!)
+- Annoying!
+
+With Session:
+- Request 1: "Who are you?" → "I'm john" → Server creates session
+- Request 2: Browser sends session ID in cookie
+         → Server checks: "Ah, this is john's session"
+- Much better!
+
+When user logs out:
+- Session is destroyed
+- Cookie is deleted
+- Next request: User is anonymous again
+                </div>
+                
+                <h3>Login Template (login.html)</h3>
+                <div class="code-block"><code><span class="punctuation">&lt;</span><span class="keyword">form</span> <span class="variable">method</span>=<span class="string">"POST"</span><span class="punctuation">&gt;</span>
+    {% <span class="function">csrf_token</span> %}
+    
+    <span class="punctuation">&lt;</span><span class="keyword">label</span><span class="punctuation">&gt;</span>Username:<span class="punctuation">&lt;/</span><span class="keyword">label</span><span class="punctuation">&gt;&lt;</span><span class="keyword">br</span><span class="punctuation">&gt;</span>
+    <span class="punctuation">&lt;</span><span class="keyword">input</span> <span class="variable">type</span>=<span class="string">"text"</span> <span class="variable">name</span>=<span class="string">"username"</span> <span class="variable">required</span><span class="punctuation">&gt;&lt;</span><span class="keyword">br</span><span class="punctuation">&gt;&lt;</span><span class="keyword">br</span><span class="punctuation">&gt;</span>
+    
+    <span class="punctuation">&lt;</span><span class="keyword">label</span><span class="punctuation">&gt;</span>Password:<span class="punctuation">&lt;/</span><span class="keyword">label</span><span class="punctuation">&gt;&lt;</span><span class="keyword">br</span><span class="punctuation">&gt;</span>
+    <span class="punctuation">&lt;</span><span class="keyword">input</span> <span class="variable">type</span>=<span class="string">"password"</span> <span class="variable">name</span>=<span class="string">"password"</span> <span class="variable">required</span><span class="punctuation">&gt;&lt;</span><span class="keyword">br</span><span class="punctuation">&gt;&lt;</span><span class="keyword">br</span><span class="punctuation">&gt;</span>
+    
+    <span class="punctuation">&lt;</span><span class="keyword">button</span> <span class="variable">type</span>=<span class="string">"submit"</span><span class="punctuation">&gt;</span>Login<span class="punctuation">&lt;/</span><span class="keyword">button</span><span class="punctuation">&gt;</span>
+<span class="punctuation">&lt;/</span><span class="keyword">form</span><span class="punctuation">&gt;</span></code></div>
+            </section>
+            
+            <!-- SECTION 6B: HOW EACH VIEW FUNCTION WORKS -->
+            <section>
+                <h2>How Each View Function Works - Deep Dive</h2>
+                
+                <h3>🔍 Understanding View Functions</h3>
+                <div class="key-point">
+                    <strong>View Function =</strong> Python function that receives HTTP request and returns HTTP response
+                    <br>Takes <code>request</code> as parameter, returns HTML or redirect
+                </div>
+                
+                <!-- SIGNUP VIEW DETAILED -->
+                <h3>📝 SIGNUP_VIEW() - Complete Explanation</h3>
+                
+                <h4>Function Definition</h4>
+                <div class="code-block"><code><span class="keyword">def</span> <span class="function">signup_view</span>(<span class="variable">request</span>):
+    <span class="comment"># This function receives an HTTP request</span>
+    <span class="comment"># request object contains: method, POST data, cookies, session, etc.</span></code></div>
+                
+                <h4>Step 1: Check Request Method</h4>
+                <div class="code-block"><code><span class="keyword">if</span> <span class="variable">request</span>.<span class="variable">method</span> == <span class="string">'POST'</span>:</code></div>
+                
+                <div class="diagram">
+REQUEST METHOD CHECK:
+
+GET Request:
+- User visits /signup/ page
+- Browser sends GET request
+- request.method = 'GET'
+- Django returns empty form (signup.html)
+- Skips the if block, goes to return render()
+
+POST Request:
+- User clicks "Sign Up" button
+- Browser sends POST request with form data
+- request.method = 'POST'
+- Django enters if block
+- Processes and validates form data
+                </div>
+                
+                <h4>Step 2: Extract Form Data</h4>
+                <div class="code-block"><code><span class="variable">username</span> = <span class="variable">request</span>.<span class="variable">POST</span>[<span class="string">'username'</span>]
+<span class="variable">email</span> = <span class="variable">request</span>.<span class="variable">POST</span>[<span class="string">'email'</span>]
+<span class="variable">password</span> = <span class="variable">request</span>.<span class="variable">POST</span>[<span class="string">'password'</span>]
+<span class="variable">password2</span> = <span class="variable">request</span>.<span class="variable">POST</span>[<span class="string">'password2'</span>]</code></div>
+                
+                <div class="key-point">
+                    <strong>request.POST:</strong> Dictionary with form field names as keys
+                    <br><strong>Example:</strong> {'username': 'john', 'email': 'john@gmail.com', ...}
+                </div>
+                
+                <div class="diagram">
+Form HTML:
+&lt;input type="text" name="username" required&gt;
+                           ↓
+Form submission sends:
+request.POST = {
+    'username': 'john',
+    'email': 'john@gmail.com',
+    'password': 'secure123',
+    'password2': 'secure123'
+}
+                </div>
+                
+                <h4>Step 3: Validation - Passwords Match</h4>
+                <div class="code-block"><code><span class="keyword">if</span> <span class="variable">password</span> == <span class="variable">password2</span>:</code></div>
+                
+                <div class="diagram">
+Validation Decision Tree:
+
+                password == password2?
+                        |
+        __________|__________
+        |                    |
+       YES                   NO
+        |                    |
+    Continue            Show Error Message
+    Validation          messages.error()
+                        redirect to signup
+                </div>
+                
+                <h4>Step 4: Check Username Uniqueness</h4>
+                <div class="code-block"><code><span class="keyword">if</span> <span class="class-name">User</span>.<span class="variable">objects</span>.<span class="function">filter</span>(<span class="variable">username</span>=<span class="variable">username</span>).<span class="function">exists</span>():
+    <span class="variable">messages</span>.<span class="function">error</span>(<span class="variable">request</span>, <span class="string">'Username already exists'</span>)
+    <span class="keyword">return</span> <span class="function">redirect</span>(<span class="string">'signup'</span>)</code></div>
+                
+                <div class="diagram">
+Database Query Process:
+
+1. User.objects.filter(username='john')
+   ↓
+2. Execute SQL: SELECT * FROM auth_user WHERE username='john'
+   ↓
+3. .exists() checks: Any results found?
+   ↓
+4. If YES: Show error, redirect to signup
+   If NO: Continue to check email
+                </div>
+                
+                <h4>Step 5: Check Email Uniqueness</h4>
+                <div class="code-block"><code><span class="keyword">elif</span> <span class="class-name">User</span>.<span class="variable">objects</span>.<span class="function">filter</span>(<span class="variable">email</span>=<span class="variable">email</span>).<span class="function">exists</span>():
+    <span class="variable">messages</span>.<span class="function">error</span>(<span class="variable">request</span>, <span class="string">'Email already exists'</span>)
+    <span class="keyword">return</span> <span class="function">redirect</span>(<span class="string">'signup'</span>)</code></div>
+                
+                <div class="key-point">
+                    <strong>elif:</strong> Only checked if previous if condition is False
+                    <br>Username exists? Show error.
+                    <br>Email exists? Show error.
+                    <br>Both OK? Continue to create user.
+                </div>
+                
+                <h4>Step 6: Create User in Database</h4>
+                <div class="code-block"><code><span class="keyword">else</span>:
+    <span class="variable">user</span> = <span class="class-name">User</span>.<span class="variable">objects</span>.<span class="function">create_user</span>(
+        <span class="variable">username</span>=<span class="variable">username</span>,
+        <span class="variable">email</span>=<span class="variable">email</span>,
+        <span class="variable">password</span>=<span class="variable">password</span>
+    )
+    <span class="variable">user</span>.<span class="function">save</span>()</code></div>
+                
+                <div class="diagram">
+Create User Process:
+
+1. User.objects.create_user()
+   ↓
+   ├─ Takes username, email, password
+   ├─ Hashes password using PBKDF2
+   ├─ Creates User object
+   └─ Returns user object
+   ↓
+2. user.save()
+   ↓
+   ├─ Saves to database
+   ├─ INSERT INTO auth_user VALUES(...)
+   └─ User now permanently stored
+   ↓
+3. messages.success()
+   ↓
+   Stores success message in session
+   ↓
+4. return redirect('signup')
+   ↓
+   Redirects to signup URL
+   ↓
+   In template: Shows success message
+   User sees: "Account created! Please login."
+                </div>
+                
+                <h4>Step 7: Show Empty Form (GET Request)</h4>
+                <div class="code-block"><code><span class="keyword">return</span> <span class="function">render</span>(<span class="variable">request</span>, <span class="string">'signup.html'</span>)</code></div>
+                
+                <div class="key-point">
+                    <strong>render():</strong> Loads template and returns HTML
+                    <br><strong>Only executed:</strong> If request.method != 'POST'
+                </div>
+                
+                <!-- LOGIN VIEW DETAILED -->
+                <h3>🔐 LOGIN_VIEW() - Complete Explanation</h3>
+                
+                <h4>Function Definition</h4>
+                <div class="code-block"><code><span class="keyword">def</span> <span class="function">login_view</span>(<span class="variable">request</span>):</code></div>
+                
+                <h4>Step 1: Check If Form Submitted</h4>
+                <div class="code-block"><code><span class="keyword">if</span> <span class="variable">request</span>.<span class="variable">method</span> == <span class="string">'POST'</span>:
+    <span class="variable">username</span> = <span class="variable">request</span>.<span class="variable">POST</span>[<span class="string">'username'</span>]
+    <span class="variable">password</span> = <span class="variable">request</span>.<span class="variable">POST</span>[<span class="string">'password'</span>]</code></div>
+                
+                <h4>Step 2: Authenticate User - The Key Function</h4>
+                <div class="code-block"><code><span class="variable">user</span> = <span class="function">authenticate</span>(<span class="variable">request</span>, <span class="variable">username</span>=<span class="variable">username</span>, <span class="variable">password</span>=<span class="variable">password</span>)</code></div>
+                
+                <div class="diagram">
+AUTHENTICATE() PROCESS - How It Works:
+
+Input: username='john', password='hello123'
+    ↓
+1. Database Lookup:
+   User.objects.get(username='john')
+   ↓
+   Found? → Continue to Step 2
+   Not found? → Return None, login fails
+    ↓
+2. Get Stored Password Hash:
+   user.password = 'pbkdf2_sha256$260000$abc123...'
+    ↓
+3. Hash the Entered Password:
+   hasher.make_password('hello123')
+   ↓
+   Result: 'pbkdf2_sha256$260000$xyz789...'
+    ↓
+4. Compare Hashes:
+   stored_hash == entered_hash?
+    ↓
+   ├─ YES → Return user object ✓
+   └─ NO → Return None ✗
+                </div>
+                
+                <h4>Step 3: Check Authentication Result</h4>
+                <div class="code-block"><code><span class="keyword">if</span> <span class="variable">user</span> <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span>:</code></div>
+                
+                <div class="diagram">
+Two Possible Outcomes:
+
+Scenario 1 - Correct Credentials:
+username='john', password='hello123'
+    ↓
+authenticate() → Returns user object
+    ↓
+user is not None? YES
+    ↓
+Execute login code
+    ↓
+Create session and redirect to welcome
+
+Scenario 2 - Wrong Credentials:
+username='john', password='wrong123'
+    ↓
+authenticate() → Returns None
+    ↓
+user is not None? NO
+    ↓
+Execute else block
+    ↓
+Show error message
+    ↓
+Redirect to login
+                </div>
+                
+                <h4>Step 4: Create Session - The login() Function</h4>
+                <div class="code-block"><code><span class="function">login</span>(<span class="variable">request</span>, <span class="variable">user</span>)
+<span class="keyword">return</span> <span class="function">redirect</span>(<span class="string">'welcome'</span>)</code></div>
+                
+                <div class="diagram">
+LOGIN() FUNCTION - What It Does:
+
+login(request, user)
+    ↓
+1. Create Session on Server:
+   session_data = {
+       'session_id': 'abc123def456',
+       'user_id': 5,
+       'username': 'john',
+       ...
+   }
+    ↓
+2. Store in Database:
+   INSERT INTO django_session ...
+    ↓
+3. Create Cookie:
+   Set-Cookie: sessionid=abc123def456; Path=/; HttpOnly
+    ↓
+4. Send to Browser:
+   Browser receives cookie
+   Stores in cookie jar
+    ↓
+5. Future Requests:
+   Browser sends: Cookie: sessionid=abc123def456
+   Django checks: Valid session? YES → User is john
+                </div>
+                
+                <h4>Step 5: Handle Wrong Credentials</h4>
+                <div class="code-block"><code><span class="keyword">else</span>:
+    <span class="variable">messages</span>.<span class="function">error</span>(<span class="variable">request</span>, <span class="string">'Invalid username or password'</span>)
+    <span class="keyword">return</span> <span class="function">redirect</span>(<span class="string">'login'</span>)</code></div>
+                
+                <h4>Step 6: Show Login Form (GET Request)</h4>
+                <div class="code-block"><code><span class="keyword">return</span> <span class="function">render</span>(<span class="variable">request</span>, <span class="string">'login.html'</span>)</code></div>
+                
+                <!-- WELCOME VIEW DETAILED -->
+                <h3>✅ WELCOME_VIEW() - Complete Explanation</h3>
+                
+                <h4>Function With Decorator</h4>
+                <div class="code-block"><code><span class="decorator">@login_required</span>(<span class="variable">login_url</span>=<span class="string">'login'</span>)
+<span class="keyword">def</span> <span class="function">welcome_view</span>(<span class="variable">request</span>):
+    <span class="keyword">return</span> <span class="function">render</span>(<span class="variable">request</span>, <span class="string">'welcome.html'</span>)</code></div>
+                
+                <h4>Understanding the @login_required Decorator</h4>
+                <div class="key-point">
+                    <strong>Decorator =</strong> Function wrapper that runs BEFORE your function
+                    <br>Checks conditions, then decides if function should run or not
+                </div>
+                
+                <div class="diagram">
+DECORATOR EXECUTION FLOW:
+
+Step 1: User visits /welcome/
+    ↓
+Step 2: Django processes URL → calls welcome_view()
+    ↓
+Step 3: BEFORE function runs, decorator executes:
+    @login_required decorator code runs
+    ↓
+Step 4: Decorator checks:
+    Is user.is_authenticated == True?
+    ├─ Check session cookie
+    ├─ Query database for session
+    └─ If valid → user is authenticated
+    ↓
+Step 5: Decision:
+    User is authenticated? 
+    ├─ YES → Allow function to run
+    │        return render(request, 'welcome.html')
+    └─ NO → Redirect to login
+           return redirect('login/?next=/welcome/')
+                </div>
+                
+                <h4>The Magic: user Object in Template</h4>
+                <div class="code-block"><code><span class="comment"># In welcome_view():</span>
+<span class="keyword">return</span> <span class="function">render</span>(<span class="variable">request</span>, <span class="string">'welcome.html'</span>)
+
+<span class="comment"># Django automatically provides 'user' in template context</span>
+<span class="comment"># Template can access:</span>
+{{ <span class="variable">user.username</span> }}       <span class="comment"># → 'john'</span>
+{{ <span class="variable">user.email</span> }}          <span class="comment"># → 'john@gmail.com'</span>
+{{ <span class="variable">user.first_name</span> }}     <span class="comment"># → 'John'</span>
+{{ <span class="variable">user.is_authenticated</span> }} <span class="comment"># → True</span></code></div>
+                
+                <h4>Detailed Decorator Flow With Examples</h4>
+                
+                <h5>Example 1: Logged-In User Accesses Page</h5>
+                <div class="diagram">
+1. User: john (logged in)
+   Visits: http://localhost:8000/welcome/
+    ↓
+2. Django receives request
+   request.user = User object (john)
+    ↓
+3. @login_required decorator checks:
+   if request.user.is_authenticated:
+   ↓
+   Result: TRUE (john has valid session)
+    ↓
+4. Decorator says: "You're allowed!"
+    ↓
+5. welcome_view() executes:
+   return render(request, 'welcome.html')
+    ↓
+6. Template receives:
+   user.username = 'john'
+   ↓
+7. Browser displays:
+   "Welcome john!
+    You are successfully logged in."
+                </div>
+                
+                <h5>Example 2: Anonymous User Tries to Access</h5>
+                <div class="diagram">
+1. User: Anonymous (not logged in)
+   Visits: http://localhost:8000/welcome/
+    ↓
+2. Django receives request
+   request.user = AnonymousUser
+    ↓
+3. @login_required decorator checks:
+   if request.user.is_authenticated:
+   ↓
+   Result: FALSE (no valid session)
+    ↓
+4. Decorator says: "You're NOT allowed!"
+    ↓
+5. Decorator redirects:
+   return redirect('/login/?next=/welcome/')
+    ↓
+6. Browser redirects to login page
+    ↓
+7. User sees login form
+    ↓
+8. After login, automatically sent to:
+   /welcome/ (original page they wanted)
+                </div>
+                
+                <!-- LOGOUT VIEW DETAILED -->
+                <h3>🚪 LOGOUT_VIEW() - Complete Explanation</h3>
+                
+                <h4>Function Definition</h4>
+                <div class="code-block"><code><span class="keyword">def</span> <span class="function">logout_view</span>(<span class="variable">request</span>):
+    <span class="function">logout</span>(<span class="variable">request</span>)
+    <span class="variable">messages</span>.<span class="function">success</span>(<span class="variable">request</span>, <span class="string">'Logged out successfully'</span>)
+    <span class="keyword">return</span> <span class="function">redirect</span>(<span class="string">'login'</span>)</code></div>
+                
+                <h4>What logout() Does</h4>
+                <div class="diagram">
+LOGOUT() FUNCTION - Complete Process:
+
+logout(request)
+    ↓
+1. Get Current Session:
+   session_id = request.session.session_key
+   ↓
+2. Delete from Database:
+   DELETE FROM django_session 
+   WHERE session_key = 'abc123def456'
+    ↓
+3. Clear Session Data:
+   request.session.flush()
+    ↓
+4. Clear Cookies:
+   Set-Cookie: sessionid=; Max-Age=0; Path=/
+    ↓
+5. Update request.user:
+   request.user = AnonymousUser
+    ↓
+6. Result:
+   User is now anonymous
+   is_authenticated = False
+   Next request: Must log in again
+                </div>
+                
+                <h4>Complete Logout Sequence</h4>
+                <div class="diagram">
+Step 1: User logged in as john
+   Session: valid
+   Cookie: sessionid=abc123def456
+   is_authenticated: True
+    ↓
+Step 2: User clicks "Logout" button
+   POST request to /logout/
+    ↓
+Step 3: logout_view() executes
+   logout(request)
+   ├─ Session deleted from database
+   ├─ Cookie cleared
+   └─ User becomes anonymous
+    ↓
+Step 4: Success message created
+   messages.success(request, 'Logged out successfully')
+    ↓
+Step 5: Redirected to login
+   return redirect('login')
+    ↓
+Step 6: Browser shows login page
+   User sees: "Logged out successfully"
+    ↓
+Step 7: User tries to access /welcome/
+   @login_required checks
+   is_authenticated? NO
+   Redirects to login again
+                </div>
+            </section>
+
+            <!-- SECTION 7: WELCOME PAGE & LOGIN REQUIRED -->
+            <section>
+                <h2>Welcome Page - Protected Pages</h2>
+                
+                <h3>What Is A Protected Page?</h3>
+                <div class="key-point">
+                    <strong>Protected Page =</strong> Only logged-in users can access it.
+                    <br>Anonymous users are redirected to login.
+                </div>
+                
+                <h3>The @login_required Decorator</h3>
+                <div class="code-block"><code><span class="keyword">from</span> <span class="class-name">django.contrib.auth.decorators</span> <span class="keyword">import</span> <span class="variable">login_required</span>
+
+<span class="decorator">@login_required</span>(<span class="variable">login_url</span>=<span class="string">'login'</span>)
+<span class="keyword">def</span> <span class="function">welcome_view</span>(<span class="variable">request</span>):
+    <span class="keyword">return</span> <span class="function">render</span>(<span class="variable">request</span>, <span class="string">'welcome.html'</span>)</code></div>
+                
+                <h3>How @login_required Works</h3>
+                <div class="diagram">
+User tries to access /welcome/
+        ↓
+@login_required decorator checks:
+        ├─ Is user.is_authenticated == True?
+        │       ├─ YES → Allow access ✓
+        │       └─ NO → Redirect to login ✗
+        ↓
+If redirected: /welcome/ → /login/?next=/welcome/
+        ↓
+After login, user redirected to /welcome/ automatically
+                </div>
+                
+                <h3>What Are Decorators?</h3>
+                <div class="key-point">
+                    <strong>Decorator =</strong> Function wrapper that adds extra functionality
+                    <br>Like a security guard checking credentials before letting someone in!
+                </div>
+                
+                <h3>Welcome Template (welcome.html)</h3>
+                <div class="code-block"><code><span class="punctuation">&lt;</span><span class="keyword">h2</span><span class="punctuation">&gt;</span>Welcome {{ <span class="variable">user.username</span> }}!<span class="punctuation">&lt;/</span><span class="keyword">h2</span><span class="punctuation">&gt;</span>
+
+<span class="punctuation">&lt;</span><span class="keyword">p</span><span class="punctuation">&gt;</span>You are successfully logged in.<span class="punctuation">&lt;/</span><span class="keyword">p</span><span class="punctuation">&gt;</span>
+
+<span class="punctuation">&lt;</span><span class="keyword">a</span> <span class="variable">href</span>=<span class="string">"{% url 'logout' %}"</span><span class="punctuation">&gt;</span>Logout<span class="punctuation">&lt;/</span><span class="keyword">a</span><span class="punctuation">&gt;</span></code></div>
+                
+                <h3>Template Variables</h3>
+                <div class="key-point">
+                    <strong>{{ user.username }}</strong> = Django template variable
+                    <br>Automatically available in every template
+                    <br>Shows the logged-in user's username
+                    <br>If not logged in, shows "AnonymousUser"
+                </div>
+            </section>
+            
+            <!-- SECTION 8: LOGOUT PROCESS -->
+            <section>
+                <h2>Logout Process</h2>
+                
+                <h3>Views.py - Logout Function</h3>
+                <div class="code-block"><code><span class="keyword">from</span> <span class="class-name">django.contrib.auth</span> <span class="keyword">import</span> <span class="variable">logout</span>
+
+<span class="keyword">def</span> <span class="function">logout_view</span>(<span class="variable">request</span>):
+    <span class="function">logout</span>(<span class="variable">request</span>)
+    <span class="variable">messages</span>.<span class="function">success</span>(<span class="variable">request</span>, <span class="string">'Logged out successfully'</span>)
+    <span class="keyword">return</span> <span class="function">redirect</span>(<span class="string">'login'</span>)</code></div>
+                
+                <h3>What logout() Does</h3>
+                <div class="diagram">
+User clicks "Logout" button
+        ↓
+logout(request) function:
+        ├─ Delete session from server
+        ├─ Clear session cookie in browser
+        ├─ User becomes anonymous
+        └─ is_authenticated = False
+        ↓
+Redirect to login page
+        ↓
+If user tries to access /welcome/:
+        ├─ @login_required checks is_authenticated
+        └─ FALSE → Redirects to login
+                </div>
+                
+                <h3>Why Logout Is Important</h3>
+                <ul>
+                    <li>🔒 <strong>Security:</strong> Prevents unauthorized access on shared computers</li>
+                    <li>🧹 <strong>Cleanup:</strong> Removes session data from server</li>
+                    <li>📱 <strong>Privacy:</strong> Ensures browser cookies are cleared</li>
+                    <li>✅ <strong>Fresh Start:</strong> User can log in again with different account</li>
+                </ul>
+            </section>
+            
+            <!-- SECTION 9: MESSAGES FRAMEWORK -->
+            <section>
+                <h2>Django Messages Framework</h2>
+                
+                <h3>What Are Messages?</h3>
+                <div class="key-point">
+                    <strong>Messages =</strong> Temporary notifications shown to users
+                    <br>Success messages (green), Error messages (red), etc.
+                    <br>Automatically disappear after display
+                </div>
+                
+                <h3>Using Messages in Views</h3>
+                <div class="code-block"><code><span class="keyword">from</span> <span class="class-name">django.contrib</span> <span class="keyword">import</span> <span class="variable">messages</span>
+
+<span class="comment"># Success message</span>
+<span class="variable">messages</span>.<span class="function">success</span>(<span class="variable">request</span>, <span class="string">'Account created! Please login.'</span>)
+
+<span class="comment"># Error message</span>
+<span class="variable">messages</span>.<span class="function">error</span>(<span class="variable">request</span>, <span class="string">'Username already exists'</span>)
+
+<span class="comment"># Warning message</span>
+<span class="variable">messages</span>.<span class="function">warning</span>(<span class="variable">request</span>, <span class="string">'Your password will expire soon'</span>)
+
+<span class="comment"># Info message</span>
+<span class="variable">messages</span>.<span class="function">info</span>(<span class="variable">request</span>, <span class="string">'Please check your email'</span>)</code></div>
+                
+                <h3>Displaying Messages in Templates</h3>
+                <div class="code-block"><code">{% <span class="keyword">if</span> <span class="variable">messages</span> %}
+    {% <span class="keyword">for</span> <span class="variable">message</span> <span class="keyword">in</span> <span class="variable">messages</span> %}
+        {% <span class="keyword">if</span> <span class="variable">message.tags</span> == <span class="string">'success'</span> %}
+            <span class="punctuation">&lt;</span><span class="keyword">p</span> <span class="variable">style</span>=<span class="string">"color: green;"</span><span class="punctuation">&gt;</span>{{ <span class="variable">message</span> }}<span class="punctuation">&lt;/</span><span class="keyword">p</span><span class="punctuation">&gt;</span>
+        {% <span class="keyword">elif</span> <span class="variable">message.tags</span> == <span class="string">'error'</span> %}
+            <span class="punctuation">&lt;</span><span class="keyword">p</span> <span class="variable">style</span>=<span class="string">"color: red;"</span><span class="punctuation">&gt;</span>{{ <span class="variable">message</span> }}<span class="punctuation">&lt;/</span><span class="keyword">p</span><span class="punctuation">&gt;</span>
+        {% <span class="keyword">endif</span> %}
+    {% <span class="keyword">endfor</span> %}
+{% <span class="keyword">endif</span> %}</code></div>
+                
+                <h3>Message Flow</h3>
+                <div class="diagram">
+Backend:
+messages.success(request, 'Account created!')
+        ↓
+Message stored in session temporarily
+        ↓
+Template:
+{{ message }} displays message
+        ↓
+After display, message is automatically deleted
+        ↓
+Not shown on next page load
+                </div>
+            </section>
+            
+            <!-- SECTION 10: COMPLETE USER JOURNEY -->
+            <section>
+                <h2>Complete User Journey Example</h2>
+                
+                <h3>Scenario: Sarah Creates Account & Logs In</h3>
+                
+                <h4><span class="step-number">1</span>Sarah Visits Website</h4>
+                <div class="diagram">
+Sarah's Browser:
+- Visits http://localhost:8000/
+- Django receives request
+- Calls signup_view() with GET method
+- Returns signup.html form
+- Sarah sees signup page
+                </div>
+                
+                <h4><span class="step-number">2</span>Sarah Fills Signup Form</h4>
+                <div class="code-block"><code>Username: sarah_smith
+Email: sarah@example.com
+Password: MySecurePass123
+Confirm: MySecurePass123</code></div>
+                
+                <h4><span class="step-number">3</span>Sarah Clicks "Sign Up"</h4>
+                <div class="diagram">
+Browser sends POST request with form data
+        ↓
+Django calls signup_view() with POST method
+        ↓
+Backend validates:
+  ✓ Passwords match: "MySecurePass123" == "MySecurePass123"
+  ✓ Username not exists: sarah_smith (new)
+  ✓ Email not exists: sarah@example.com (new)
+        ↓
+ALL VALID! Create user.
+                </div>
+                
+                <h4><span class="step-number">4</span>User Created in Database</h4>
+                <div class="code-block"><code><span class="class-name">User</span>.<span class="variable">objects</span>.<span class="function">create_user</span>(
+    <span class="variable">username</span>=<span class="string">'sarah_smith'</span>,
+    <span class="variable">email</span>=<span class="string">'sarah@example.com'</span>,
+    <span class="variable">password</span>=<span class="string">'MySecurePass123'</span>  <span class="comment">← Gets hashed!</span>
+)
+
+<span class="comment">Stored in Database:</span>
+<span class="comment">- username: sarah_smith</span>
+<span class="comment">- email: sarah@example.com</span>
+<span class="comment">- password: pbkdf2_sha256$260000$abc123...  ← Hash!</span></code></div>
+                
+                <h4><span class="step-number">5</span>Success Message Shown</h4>
+                <div class="success">
+                    ✅ Account created! Please login.
+                </div>
+                
+                <h4><span class="step-number">6</span>Redirected to Login</h4>
+                <div class="diagram">
+Browser redirected to http://localhost:8000/login/
+        ↓
+Django calls login_view() with GET method
+        ↓
+Returns login.html form
+        ↓
+Sarah sees login page
+                </div>
+                
+                <h4><span class="step-number">7</span>Sarah Logs In</h4>
+                <div class="code-block"><code><span class="variable">Username</span>: <span class="string">sarah_smith</span>
+<span class="variable">Password</span>: <span class="string">MySecurePass123</span></code></div>
+                
+                <h4><span class="step-number">8</span>Backend Authenticates</h4>
+                <div class="diagram">
+authenticate(request, username='sarah_smith', password='MySecurePass123')
+        ↓
+Search database: Find user sarah_smith? YES ✓
+        ↓
+Get stored password hash: pbkdf2_sha256$260000$abc123...
+        ↓
+Hash entered password: "MySecurePass123"
+Hash result: pbkdf2_sha256$260000$abc123...
+        ↓
+Compare: 
+  stored hash == entered hash ? YES ✓
+        ↓
+Return: User object (sarah_smith)
+                </div>
+                
+                <h4><span class="step-number">9</span>Session Created</h4>
+                <div class="code-block"><code><span class="function">login</span>(<span class="variable">request</span>, <span class="variable">user</span>)
+        ↓
+<span class="variable">Django</span> <span class="function">creates</span> <span class="variable">session</span>:
+- <span class="variable">Session</span> <span class="variable">ID</span>: <span class="string">"abc123def456..."</span>
+- <span class="variable">Stored</span> <span class="variable">on</span> <span class="variable">server</span>
+- <span class="variable">Cookie</span> <span class="variable">sent</span> <span class="variable">to</span> <span class="variable">browser</span>
+
+<span class="variable">Browser</span> <span class="variable">now</span> <span class="variable">has</span>:
+- <span class="variable">Cookie</span>: <span class="variable">sessionid</span>=<span class="string">abc123def456...</span></code></div>
+                
+                <h4><span class="step-number">10</span>Redirected to Welcome</h4>
+                <div class="diagram">
+Browser redirected to http://localhost:8000/welcome/
+        ↓
+Django calls welcome_view() with GET method
+        ↓
+@login_required checks:
+  ├─ Request has session cookie? YES
+  ├─ Server has this session? YES
+  ├─ Is user authenticated? YES
+  └─ Allow access ✓
+        ↓
+welcome_view() executes
+        ↓
+Returns welcome.html
+        ↓
+Template shows: Welcome sarah_smith!
+                </div>
+                
+                <h4><span class="step-number">11</span>Sarah Logs Out</h4>
+                <div class="diagram">
+Sarah clicks "Logout" button
+        ↓
+logout(request) executes:
+  ├─ Delete session from server
+  ├─ Send cookie deletion to browser
+  └─ User becomes anonymous
+        ↓
+Redirected to http://localhost:8000/login/
+        ↓
+Sarah sees login page again
+                </div>
+                
+                <h4><span class="step-number">12</span>Sarah Can't Access Welcome Anymore</h4>
+                <div class="diagram">
+If Sarah tries: http://localhost:8000/welcome/
+        ↓
+@login_required checks:
+  ├─ Request has valid session? NO
+  ├─ Is user authenticated? NO
+  └─ Deny access ✗
+        ↓
+Redirect to: /login/?next=/welcome/
+        ↓
+Sarah must log in first!
+                </div>
+            </section>
+            
+            <!-- SECTION 11: SECURITY CONCEPTS -->
+            <section>
+                <h2>Security Concepts For Beginners</h2>
+                
+                <h3>1. Password Hashing</h3>
+                <div class="comparison">
+                    <div class="comparison-item good">
+                        <h4>✅ GOOD - Hashing</h4>
+                        <div class="code-block"><code><span class="variable">Password</span>: <span class="string">"hello123"</span>
+↓
+<span class="variable">Hash</span>: <span class="string">"pbkdf2_sha256$..."</span>
+↓
+<span class="comment">• One-way (can't reverse)</span>
+<span class="comment">• Unique for each password</span>
+<span class="comment">• Same password = same hash</span>
+<span class="comment">• Cannot retrieve original</span></code></div>
+                    </div>
+                    <div class="comparison-item bad">
+                        <h4>❌ BAD - Plain Text</h4>
+                        <div class="code-block"><code><span class="variable">Password</span>: <span class="string">"hello123"</span>
+↓
+<span class="variable">Stored</span>: <span class="string">"hello123"</span>
+↓
+<span class="comment">• Anyone with database access sees it</span>
+<span class="comment">• Used in multiple sites = compromised</span>
+<span class="comment">• Cannot verify without comparing</span>
+<span class="comment">• Major security risk!</span></code></div>
+                    </div>
+                </div>
+                
+                <h3>2. CSRF Token Protection</h3>
+                <div class="diagram">
+CSRF = Cross-Site Request Forgery
+
+Hacker's Website                  Your Website
+     ↓                                 ↓
+"Click me"  ─────[stolen cookie]─→ Delete account
+                                      ↓
+                                   Vulnerable!
+
+With CSRF Token:
+"Click me"  ─────[stolen cookie]─→ Needs CSRF token
+                ─────[no token]──→  ✗ Rejected!
+                                    ✓ Protected!
+                </div>
+                
+                <h3>3. Session Security</h3>
+                <div class="key-point">
+                    <strong>Session Cookie:</strong> Contains session ID, not password
+                    <br><strong>Secure:</strong> Session ID is random and expires
+                    <br><strong>HttpOnly:</strong> JavaScript cannot access (JavaScript can't steal it)
+                </div>
+                
+                <h3>4. SQL Injection Prevention</h3>
+                <div class="comparison">
+                    <div class="comparison-item good">
+                        <h4>✅ SAFE - Django ORM</h4>
+                        <div class="code-block"><code><span class="class-name">User</span>.<span class="variable">objects</span>.<span class="function">filter</span>(
+    <span class="variable">username</span>=<span class="variable">username</span>
+)
+
+<span class="comment">• Uses parameterized queries</span>
+<span class="comment">• Django escapes dangerous characters</span>
+<span class="comment">• No SQL injection possible</span></code></div>
+                    </div>
+                    <div class="comparison-item bad">
+                        <h4>❌ DANGEROUS - Raw SQL</h4>
+                        <div class="code-block"><code><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> <span class="variable">auth_user</span>
+<span class="keyword">WHERE</span> <span class="variable">username</span>=<span class="string">'{username}'</span>
+
+<span class="keyword">If</span> <span class="variable">username</span> = <span class="string">"' OR '1'='1"</span>
+<span class="variable">Result</span>: <span class="variable">Gets</span> <span class="variable">ALL</span> <span class="variable">users</span>!
+
+<span class="comment">• Always vulnerable</span>
+<span class="comment">• Never do this!</span></code></div>
+                    </div>
+                </div>
+                
+                <h3>5. @login_required Protection</h3>
+                <div class="key-point">
+                    <strong>@login_required decorator</strong> ensures:
+                    <br>• Only authenticated users can access view
+                    <br>• Anonymous users redirected to login
+                    <br>• Prevents unauthorized data access
+                </div>
+            </section>
+            
+            <!-- SECTION 12: KEY TAKEAWAYS -->
+            <section>
+                <h2>Key Takeaways & Summary</h2>
+                
+                <h3>What We Learned</h3>
+                <ol>
+                    <li><strong>URL Routing:</strong> URLs map to view functions</li>
+                    <li><strong>GET vs POST:</strong> GET for displaying, POST for submitting</li>
+                    <li><strong>User Model:</strong> Django's built-in database table for users</li>
+                    <li><strong>Signup:</strong> Validate → Create user → Hash password</li>
+                    <li><strong>Authentication:</strong> Compare password hashes, not plain passwords</li>
+                    <li><strong>Sessions:</strong> Server remembers users via cookies</li>
+                    <li><strong>@login_required:</strong> Protects pages for logged-in users only</li>
+                    <li><strong>Messages:</strong> Show success/error notifications to users</li>
+                    <li><strong>Security:</strong> Hashing, CSRF tokens, SQL injection prevention</li>
+                </ol>
+                
+                <h3>Common Mistakes to Avoid</h3>
+                <div class="warning">
+                    <strong>❌ Storing plain passwords</strong><br>
+                    ✅ Always use create_user() which hashes automatically
+                </div>
+                
+                <div class="warning">
+                    <strong>❌ Forgetting CSRF token in forms</strong><br>
+                    ✅ Always include {% csrf_token %} in POST forms
+                </div>
+                
+                <div class="warning">
+                    <strong>❌ Forgetting @login_required decorator</strong><br>
+                    ✅ Protect pages that only logged-in users should access
+                </div>
+                
+                <div class="warning">
+                    <strong>❌ Using raw SQL queries</strong><br>
+                    ✅ Use Django ORM (User.objects.filter, etc.)
+                </div>
+                
+                <h3>Next Steps to Learn</h3>
+                <ul>
+                    <li>🔐 Add email verification for signup</li>
+                    <li>🔄 Add password reset functionality</li>
+                    <li>📱 Add social login (Google, Facebook)</li>
+                    <li>🛡️ Add two-factor authentication (2FA)</li>
+                    <li>👤 Create user profile pages</li>
+                    <li>🎨 Improve UI/UX with Bootstrap or Tailwind</li>
+                    <li>⚙️ Add settings/preferences for users</li>
+                </ul>
+            </section>
+            
+            <!-- SECTION 13: DJANGO COMMANDS CHEAT SHEET -->
+            <section>
+                <h2>Django Commands Cheat Sheet</h2>
+                
+                <h3>Essential Commands</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Command</th>
+                            <th>What It Does</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>python manage.py runserver</code></td>
+                            <td>Start development server (http://localhost:8000)</td>
+                        </tr>
+                        <tr>
+                            <td><code>python manage.py makemigrations</code></td>
+                            <td>Create database migration files (after model changes)</td>
+                        </tr>
+                        <tr>
+                            <td><code>python manage.py migrate</code></td>
+                            <td>Apply migrations to database</td>
+                        </tr>
+                        <tr>
+                            <td><code>python manage.py createsuperuser</code></td>
+                            <td>Create admin account</td>
+                        </tr>
+                        <tr>
+                            <td><code>python manage.py shell</code></td>
+                            <td>Interactive Python shell for testing</td>
+                        </tr>
+                        <tr>
+                            <td><code>python manage.py test</code></td>
+                            <td>Run test suite</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+            
+            <!-- SECTION 14: DJANGO PROJECT STRUCTURE -->
+            <section>
+                <h2>Full Request-Response Lifecycle</h2>
+                
+                <h3>Complete Flow Diagram</h3>
+                <div class="diagram">
+┌─────────────────────────────────────────────────────┐
+│              USER'S WEB BROWSER                      │
+│  1. User enters URL or submits form                  │
+└─────────────────┬───────────────────────────────────┘
+                  │ HTTP Request
+                  ↓
+┌─────────────────────────────────────────────────────┐
+│            DJANGO WEB SERVER                         │
+│  2. Receives HTTP request                            │
+└─────────────────┬───────────────────────────────────┘
+                  │
+                  ↓
+┌─────────────────────────────────────────────────────┐
+│          URL ROUTING (urls.py)                       │
+│  3. Matches URL to view function                     │
+└─────────────────┬───────────────────────────────────┘
+                  │
+                  ↓
+┌─────────────────────────────────────────────────────┐
+│          VIEW FUNCTION (views.py)                    │
+│  4. Executes backend logic                           │
+│  5. Validates input                                  │
+│  6. Makes database queries                           │
+└──────────┬──────────────────────┬────────────────────┘
+           │                      │
+           ↓                      ↓
+    ┌──────────────┐      ┌──────────────┐
+    │  DATABASE    │      │  TEMPLATES   │
+    │  (MySQL)     │      │  (.html)     │
+    │  Read/Write  │      │  Render page │
+    └──────────────┘      └──────────────┘
+           │                      │
+           └──────────┬───────────┘
+                      ↓
+┌─────────────────────────────────────────────────────┐
+│    HTTP RESPONSE (HTML/Redirect)                    │
+│  7. Send back to browser                            │
+└─────────────────┬───────────────────────────────────┘
+                  │
+                  ↓
+┌─────────────────────────────────────────────────────┐
+│         USER'S WEB BROWSER                          │
+│  8. Receives HTML                                   │
+│  9. Renders page                                    │
+│  10. User sees website                              │
+└─────────────────────────────────────────────────────┘
+                </div>
+            </section>
+            
+            <!-- SECTION 15: COMMON QUESTIONS -->
+            <section>
+                <h2>Common Questions & Answers</h2>
+                
+                <h3>Q: What happens if I don't use @login_required?</h3>
+                <div class="key-point">
+                    <strong>A:</strong> Anyone (logged in or not) can access the page.
+                    The welcome page would show "Welcome AnonymousUser!" to strangers.
+                </div>
+                
+                <h3>Q: Why hash passwords instead of encrypting?</h3>
+                <div class="key-point">
+                    <strong>A:</strong> Encryption can be reversed (bad). Hashing is one-way.
+                    Even Django staff can't recover original passwords - only users can!
+                </div>
+                
+                <h3>Q: What if user enters wrong password?</h3>
+                <div class="key-point">
+                    <strong>A:</strong> authenticate() returns None. View shows error message.
+                    User redirected to login to try again.
+                </div>
+                
+                <h3>Q: How long does a session last?</h3>
+                <div class="key-point">
+                    <strong>A:</strong> Default 2 weeks of inactivity. Configurable in settings.py.
+                    Logout immediately deletes session.
+                </div>
+                
+                <h3>Q: Can I use Django's User model for my own fields?</h3>
+                <div class="key-point">
+                    <strong>A:</strong> Create custom model extending User, or create separate model
+                    linked to User (UserProfile). More advanced topic.
+                </div>
+                
+                <h3>Q: How do I handle "Forgot Password"?</h3>
+                <div class="key-point">
+                    <strong>A:</strong> Generate secure token, send email with reset link,
+                    allow user to set new password if token is valid.
+                </div>
+            </section>
+            
+            <!-- FOOTER SECTION -->
+            <div style="margin-top: 60px; padding-top: 30px; border-top: 3px solid #667eea; text-align: center;">
+                <h2>🎓 Ready to Build More?</h2>
+                <p style="font-size: 1.1em; margin: 20px 0;">You now understand the complete authentication flow!</p>
+                
+                <div class="nav-buttons">
+                    <button class="btn btn-secondary" onclick="window.print()">📄 Print This Guide</button>
+                </div>
+                
+                <div class="slide-indicator">
+                    <p style="margin-top: 30px; font-style: italic;">
+                        Made for beginners • Easy to understand • Complete explanation
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- FOOTER -->
+        <footer>
+            <p>&copy; 2025 Django Authentication Tutorial | Created for Student Learning</p>
+            <p style="font-size: 0.9em;">Django Version 5.2.7 | Python 3.x</p>
+        </footer>
+    </div>
+</body>
+</html>
