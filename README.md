@@ -71,11 +71,6 @@ A complete, beginner-friendly Django authentication system with user registratio
 
 <img src="images/signup.png" alt="Signup Page" width="100%" style="border: 2px solid #667eea; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
 
-Users can create a new account with validation for:
-- ✅ Unique username
-- ✅ Unique email
-- ✅ Password confirmation
-
 </td>
 <td width="33%" align="center">
 
@@ -83,22 +78,12 @@ Users can create a new account with validation for:
 
 <img src="images/login.png" alt="Login Page" width="100%" style="border: 2px solid #667eea; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
 
-Secure authentication with:
-- ✅ Username/password validation
-- ✅ Session creation
-- ✅ Automatic redirection
-
 </td>
 <td width="33%" align="center">
 
 ### 🎉 Welcome Page
 
 <img src="images/welcome_page.png" alt="Welcome Page" width="100%" style="border: 2px solid #667eea; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
-
-Protected dashboard showing:
-- ✅ Personalized greeting
-- ✅ User information
-- ✅ Logout option
 
 </td>
 </tr>
