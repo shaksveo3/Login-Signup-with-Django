@@ -13,7 +13,7 @@ A complete, beginner-friendly Django authentication system with user registratio
 
 <table>
 <tr>
-<td width="50%" valign="top">
+<td width="25%" valign="top">
 
 ### 🎯 Getting Started
 - [✨ Features](#features)
@@ -21,6 +21,8 @@ A complete, beginner-friendly Django authentication system with user registratio
 - [🔧 Installation](#installation)
 - [⚙️ Configuration](#configuration)
 
+</td>
+<td width="25%" valign="top">
 ### 📘 Documentation
 - [📖 Usage Guide](#usage)
 - [📁 Project Structure](#project-structure)
@@ -28,14 +30,15 @@ A complete, beginner-friendly Django authentication system with user registratio
 - [📚 API Endpoints](#api-endpoints)
 
 </td>
-<td width="50%" valign="top">
+<td width="25%" valign="top">
 
 ### 🛡️ Advanced Topics
 - [🔒 Security Features](#security-features)
 - [🐛 Troubleshooting](#troubleshooting)
 - [🚀 Future Enhancements](#future-enhancements)
 - [🛠️ Technologies Used](#technologies-used)
-
+</td>
+<td width="25%" valign="top">
 ### 🤝 Community
 - [🤝 Contributing](#contributing)
 - [📄 License](#license)
