@@ -447,20 +447,7 @@ User Table in Database
                     <li>✅ No need to reinvent the wheel!</li>
                 </ul>
                 
-                <h3>Importing User Model</h3>
-                <div class="code-block"><code><span class="keyword">from</span> <span class="class-name">django.contrib.auth.models</span> <span class="keyword">import</span> <span class="class-name">User</span>
-
-<span class="comment"># Create a new user</span>
-<span class="variable">user</span> = <span class="class-name">User</span>.<span class="function">objects.create_user</span>(
-    <span class="string">username</span>=<span class="string">'john'</span>,
-    <span class="string">email</span>=<span class="string">'john@example.com'</span>,
-    <span class="string">password</span>=<span class="string">'secure123'</span>
-)
-
-<span class="comment"># Query users</span>
-<span class="variable">users</span> = <span class="class-name">User</span>.<span class="function">objects.all</span>()
-<span class="variable">user</span> = <span class="class-name">User</span>.<span class="function">objects.get</span>(<span class="string">username</span>=<span class="string">'john'</span>)</code></div>
-            </section>
+                 </section>
             
             <!-- SECTION 4: URL ROUTING -->
             <section>
@@ -1862,3 +1849,4 @@ With CSRF Token:
     </div>
 </body>
 </html>
+
